@@ -23,7 +23,7 @@ class_names = [
 ]
 
 # Load the state dict from the file
-checkpoint = torch.load('save_model_40e_0.0001lr/1.fasterrcnn_mobilenet_v3_large_fpn.pth', map_location='cpu')
+checkpoint = torch.load('save_model_40e_0.0001lr/1.fasterrcnn_mobilenet_v3_large_fpn.pth')
 
 # Extract the model weights from the 'model_state_dict' key
 model_weights = checkpoint['model_state_dict']
