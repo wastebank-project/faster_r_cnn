@@ -1,11 +1,15 @@
-FROM python:3.9
+FROM python:3.9-slim
 
-COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
+ENV PYTHONUNBUFFERED True
 
-COPY . /app
 
-WORKDIR /app
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
 
-CMD python app.py
+
+RUN pip install -r requirements.txt
+
+
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app

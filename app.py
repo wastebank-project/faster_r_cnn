@@ -31,4 +31,5 @@ def predict():
     return send_file(img_io, mimetype=f'image/{image_format.lower()}')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+    # app.run(host='0.0.0.0', port=8080)
+    app.run(debug=True)
