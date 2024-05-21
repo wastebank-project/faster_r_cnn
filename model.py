@@ -49,7 +49,7 @@ model = fasterrcnn_mobilenet_v3_large_fpn(weights=None, num_classes=num_classes)
 model.load_state_dict(model_weights)
 model.eval()
 
-def get_prediction(image_bytes, threshold=0.5):
+def get_prediction(image_bytes, threshold=0.6):
     img = Image.open(image_bytes).convert("RGB")
     img_tensor = F.to_tensor(img).unsqueeze(0)  # Add batch dimension
     with torch.no_grad():
@@ -77,7 +77,7 @@ def draw_boxes(image, boxes, labels, scores):
 
     for box, label, score in zip(boxes, labels, scores):
         x1, y1, x2, y2 = box
-        draw.rectangle(((x1, y1), (x2, y2)), outline="red", width=4)
+        draw.rectangle(((x1, y1), (x2, y2)), outline="red", width=5)
         text = f"{label}: {score:.2f}"
         text_bbox = draw.textbbox((x1, y1), text, font=font)
         draw.rectangle(((x1, y1 - (text_bbox[3] - text_bbox[1])), (x1 + (text_bbox[2] - text_bbox[0]), y1)), fill="yellow")
