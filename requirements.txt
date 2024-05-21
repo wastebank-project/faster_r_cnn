@@ -1,7 +1,7 @@
-request
-Flask
-pillow
-torch
-torchvision
-gunicorn
-matplotlib
+request==2.31.0
+Flask==3.0.3
+pillow==10.3.0
+torch==2.3.0
+torchvision==0.18.0
+gunicorn==22.0.0
+matplotlib==3.8.4
