@@ -1,5 +1,6 @@
-Flask~=3.0.3
-pillow~=10.3.0
-torch~=2.3.0
-torchvision~=0.18.0
+Flask
+pillow
+torch
+torchvision
 matplotlib
+gunicorn
