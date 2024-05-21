@@ -4,7 +4,6 @@ from io import BytesIO
 from torchvision.models.detection import fasterrcnn_mobilenet_v3_large_fpn
 from torchvision.transforms import functional as F
 from PIL import Image, ImageDraw, ImageFont
-from google.cloud import storage
 
 public_url = 'https://storage.googleapis.com/dataset-wasteapp/1.fasterrcnn_mobilenet_v3_large_fpn.pth'
 
