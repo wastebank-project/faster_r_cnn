@@ -1,18 +1,23 @@
-# Gunakan image python sebagai base image
+# Use the official Python image as the base image
 FROM python:3.10-slim
 
-# Set work directory
+# Set the working directory
 WORKDIR /app
 
-# Copy requirements.txt dan install dependencies
+# Copy the requirements file into the container
 COPY requirements.txt .
+
+# Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy seluruh project file ke work directory
+# Copy the rest of the application code into the container
 COPY . .
 
-# Expose port yang akan digunakan Flask
+# Set environment variables for Flask
+ENV FLASK_APP=main.py
+
+# Expose the port Flask is running on
 EXPOSE 8080
 
-# Jalankan Flask app
-CMD ["python", "main.py"]
+# Define the command to run the application
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]

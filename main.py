@@ -5,6 +5,11 @@ from model import get_prediction, draw_boxes
 
 app = Flask(__name__)
 
+@app.route("/")
+def main():
+    return """
+        Response Successful!
+    """
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' not in request.files:
