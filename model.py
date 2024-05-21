@@ -29,11 +29,10 @@ checkpoint = torch.load('save_model_40e_0.0001lr/1.fasterrcnn_mobilenet_v3_large
 model_weights = checkpoint['model_state_dict']
 
 # Initialize the model with the number of classes it was trained with
-num_classes = 15  # Adjust to the actual number of classes (excluding background)
+num_classes = len(class_names)  # Number of classes including background
 model = fasterrcnn_mobilenet_v3_large_fpn(weights=None, num_classes=num_classes)
 model.load_state_dict(model_weights)
 model.eval()
-
 
 def get_prediction(image_bytes, threshold=0.5):
     img = Image.open(image_bytes).convert("RGB")
@@ -57,7 +56,6 @@ def get_prediction(image_bytes, threshold=0.5):
 
     return img, selected_boxes, selected_labels, selected_scores
 
-
 def draw_boxes(image, boxes, labels, scores):
     draw = ImageDraw.Draw(image)
     font = ImageFont.load_default()
@@ -71,4 +69,3 @@ def draw_boxes(image, boxes, labels, scores):
         draw.text((x1, y1 - (text_bbox[3] - text_bbox[1])), text, fill="black", font=font)
 
     return image
-

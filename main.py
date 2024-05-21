@@ -7,9 +7,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return """
-        Response Successful!
-    """
+    return "Response Successful!"
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' not in request.files:
@@ -33,4 +32,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
-    # app.run(debug=True)
