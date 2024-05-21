@@ -19,8 +19,15 @@ def predict():
     image_format = Image.open(image_bytes).format  # Detect image format
     image_bytes.seek(0)  # Reset the stream to the beginning
 
+    # Resize the image to 300x400 pixels
+    image = Image.open(image_bytes)
+    image = image.resize((300, 400))
+    image_bytes = io.BytesIO()
+    image.save(image_bytes, format=image_format)
+    image_bytes.seek(0)  # Reset the stream to the beginning
+
     # Get predictions
-    img, boxes, labels, scores = get_prediction(image_bytes, threshold=0.7)
+    img, boxes, labels, scores = get_prediction(image_bytes, threshold=0.5)
     img_with_boxes = draw_boxes(img, boxes, labels, scores)
 
     # Save the image with boxes to a BytesIO object
