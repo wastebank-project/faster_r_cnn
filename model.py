@@ -1,5 +1,5 @@
 import torch
-import requests
+import urllib.request
 from io import BytesIO
 from torchvision.models.detection import fasterrcnn_mobilenet_v3_large_fpn
 from torchvision.transforms import functional as F
@@ -9,12 +9,15 @@ from google.cloud import storage
 public_url = 'https://storage.googleapis.com/dataset-wasteapp/1.fasterrcnn_mobilenet_v3_large_fpn.pth'
 
 def load_model_from_url(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        model_state_dict = torch.load(BytesIO(response.content), map_location=torch.device('cpu'))
-        return model_state_dict
-    else:
-        raise Exception(f"Failed to download file. Status code: {response.status_code}")
+    try:
+        with urllib.request.urlopen(url) as response:
+            if response.status == 200:
+                model_state_dict = torch.load(BytesIO(response.read()), map_location=torch.device('cpu'))
+                return model_state_dict
+            else:
+                raise Exception(f"Failed to download file. Status code: {response.status}")
+    except urllib.error.URLError as e:
+        raise Exception(f"Failed to download file. Error: {e.reason}")
 
 # Load the state dict from the URL
 checkpoint = load_model_from_url(public_url)
