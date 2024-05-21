@@ -8,4 +8,4 @@ COPY . /app
 
 WORKDIR /app
 
-CMD python main.py
+CMD python app.py
