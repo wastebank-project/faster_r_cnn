@@ -1,7 +1,23 @@
 import torch
+import requests
+from io import BytesIO
 from torchvision.models.detection import fasterrcnn_mobilenet_v3_large_fpn
 from torchvision.transforms import functional as F
 from PIL import Image, ImageDraw, ImageFont
+from google.cloud import storage
+
+public_url = 'https://storage.googleapis.com/dataset-wasteapp/1.fasterrcnn_mobilenet_v3_large_fpn.pth'
+
+def load_model_from_url(url):
+    response = requests.get(url)
+    if response.status_code == 200:
+        model_state_dict = torch.load(BytesIO(response.content), map_location=torch.device('cpu'))
+        return model_state_dict
+    else:
+        raise Exception(f"Failed to download file. Status code: {response.status_code}")
+
+# Load the state dict from the URL
+checkpoint = load_model_from_url(public_url)
 
 # Define the classes
 class_names = [
@@ -21,9 +37,6 @@ class_names = [
     'Toples Kaca',
     'Tutup Galon'
 ]
-
-# Load the state dict from the file
-checkpoint = torch.load('save_model_40e_0.0001lr/1.fasterrcnn_mobilenet_v3_large_fpn.pth')
 
 # Extract the model weights from the 'model_state_dict' key
 model_weights = checkpoint['model_state_dict']
