@@ -45,7 +45,7 @@ def predict():
     image = correct_image_orientation(image)
     
     # Resize the image to 300x400 pixels
-    image = image.resize((500, 500))
+    image = image.resize((540, 640))
     image_bytes = io.BytesIO()
     image.save(image_bytes, format=image_format)
     image_bytes.seek(0)  # Reset the stream to the beginning
