@@ -49,7 +49,7 @@ model = fasterrcnn_mobilenet_v3_large_fpn(weights=None, num_classes=num_classes)
 model.load_state_dict(model_weights)
 model.eval()
 
-def get_prediction(image_bytes, threshold=0.6):
+def get_prediction(image_bytes, threshold=0.55):
     img = Image.open(image_bytes).convert("RGB")
     img_tensor = F.to_tensor(img).unsqueeze(0)  # Add batch dimension
     with torch.no_grad():
@@ -71,9 +71,9 @@ def get_prediction(image_bytes, threshold=0.6):
 
     return img, selected_boxes, selected_labels, selected_scores
 
-def draw_boxes(image, boxes, labels, scores):
+def draw_boxes(image, boxes, labels, scores, font_path='arial-bold.ttf', font_size=15):
     draw = ImageDraw.Draw(image)
-    font = ImageFont.load_default()
+    font = ImageFont.truetype(font_path, font_size)
 
     for box, label, score in zip(boxes, labels, scores):
         x1, y1, x2, y2 = box
