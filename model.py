@@ -71,13 +71,13 @@ def get_prediction(image_bytes, threshold=0.55):
 
     return img, selected_boxes, selected_labels, selected_scores
 
-def draw_boxes(image, boxes, labels, scores, font_path='arial-bold.ttf', font_size=24):
+def draw_boxes(image, boxes, labels, scores, font_path='arial-bold.ttf', font_size=28):
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(font_path, font_size)
 
     for box, label, score in zip(boxes, labels, scores):
         x1, y1, x2, y2 = box
-        draw.rectangle(((x1, y1), (x2, y2)), outline="red", width=8)
+        draw.rectangle(((x1, y1), (x2, y2)), outline="red", width=9)
         text = f"{label}: {score:.2f}"
         text_bbox = draw.textbbox((x1, y1), text, font=font)
         draw.rectangle(((x1, y1 - (text_bbox[3] - text_bbox[1])), (x1 + (text_bbox[2] - text_bbox[0]), y1)), fill="yellow")
