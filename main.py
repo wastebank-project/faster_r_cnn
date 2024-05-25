@@ -51,7 +51,7 @@ def predict():
     image_bytes.seek(0)  # Reset the stream to the beginning
 
     # Get predictions
-    img, boxes, labels, scores = get_prediction(image_bytes, threshold=0.55)
+    img, boxes, labels, scores = get_prediction(image_bytes, threshold=0.45)
     img_with_boxes = draw_boxes(img, boxes, labels, scores)
 
     # Save the image with boxes to a BytesIO object
