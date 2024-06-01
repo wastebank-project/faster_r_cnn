@@ -5,7 +5,7 @@ from torchvision.models.detection import fasterrcnn_mobilenet_v3_large_fpn
 from torchvision.transforms import functional as F
 from PIL import Image, ImageDraw, ImageFont
 
-public_url = 'https://storage.googleapis.com/dataset-wasteapp/50epoch_rebalance.pth'
+public_url = 'https://storage.googleapis.com/dataset-wasteapp/100epoch_rebalance_1%3A100lr.pth'
 
 def load_model_from_url(url):
     try:
@@ -49,7 +49,7 @@ model = fasterrcnn_mobilenet_v3_large_fpn(weights=None, num_classes=num_classes)
 model.load_state_dict(model_weights)
 model.eval()
 
-def get_prediction(image_bytes, threshold=0.45):
+def get_prediction(image_bytes, threshold=0.5):
     img = Image.open(image_bytes).convert("RGB")
     img_tensor = F.to_tensor(img).unsqueeze(0)  # Add batch dimension
     with torch.no_grad():
